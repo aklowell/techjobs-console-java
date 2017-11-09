@@ -1,8 +1,7 @@
 package org.launchcode.techjobs.console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+
 
 /**
  * Created by LaunchCode
@@ -11,7 +10,7 @@ public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -44,7 +43,7 @@ public class TechJobs {
                     ArrayList<String> results = JobData.findAll(columnChoice);
 
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
-
+                    Collections.sort(results);
                     // Print list of skills, employers, etc
                     for (String item : results) {
                         System.out.println(item);
@@ -60,8 +59,9 @@ public class TechJobs {
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
 
+                // System.out.println("Search all fields not yet implemented.");
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -103,7 +103,7 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
@@ -111,6 +111,20 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+
+        if (someJobs.isEmpty()) System.out.println("No jobs match your search.");
+        else {
+            for (HashMap job : someJobs) {
+                System.out.println("\n*****");
+                job.forEach((key1, value1) -> System.out.println(key1 + ":" + value1));
+                System.out.println("*****");
+               // System.out.println(job.entrySet()); THIS PRINTS OUT ALL THE KEY VALUE PAIRS ON ONE LINE separated by commas
+                //  for (Map.Entry<String,String> job : someJobs.entrySet())
+
+                //     System.out.println(job);THIS IS THE ONE THAT LISTS ALL THE JOBS, KEY and VALUE
+            }
+        }
     }
+
 }
+
