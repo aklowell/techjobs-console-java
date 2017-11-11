@@ -104,9 +104,21 @@ public class JobData {
              selectjobs.add(row);
             }
         }
+        {
+            ArrayList parsejobs = new ArrayList();
+            parsejobs.addAll(selectjobs);
+            HashSet hs = new HashSet();
+            hs.addAll(parsejobs);
+            parsejobs.clear();
+            parsejobs.addAll(hs);
 
-        return selectjobs;
+
+            return parsejobs;
+        }
     }
+
+   //     return selectjobs;
+//    }
         /**
          * Read in data from a CSV file and store it in a list
          */
